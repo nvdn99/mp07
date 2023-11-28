@@ -1,0 +1,57 @@
+/* App.css */
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e6ccff; /* Light Purple */
+ }
+ 
+ .app-title {
+  color: #cc66ff; /* Purple */
+ }
+ 
+ .app-section {
+  margin-bottom: 20px;
+ }
+ 
+ .app-button {
+  background-color: #ff3399; /* Pink */
+  color: #ffffff; /* White */
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+ }
+ 
+ .app-file-list {
+  list-style-type: none;
+  padding: 0;
+ }
+ 
+ .app-file-list li {
+  margin-bottom: 8px;
+ }
+ 
+ .app-delete-button {
+  background-color: #ff6666; /* Light Red */
+  color: #ffffff; /* White */
+  padding: 4px 8px;
+  border: none;
+  cursor: pointer;
+ }
+ 
+ .app-json-section {
+  background-color: #ffccff; /* Light Pink */
+  padding: 20px;
+  margin-top: 20px;
+ }
+ 
+ .app-file-content {
+  white-space: pre-wrap;
+ }
+ 
+ .app-file-not-found {
+  color: #ff6666; /* Light Red */
+ }
+ 
+ /* Add any additional styles as needed */

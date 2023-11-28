@@ -1,0 +1,25 @@
+<!-- addCar.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Add a Car</title>
+</head>
+<body>
+   <h1>Add a Car</h1>
+   <form action="/v1/api/cars" method="POST">
+       <label for="model">Model:</label>
+       <input type="text" id="model" name="model" required>
+
+       <label for="year">Year:</label>
+       <input type="number" id="year" name="year" required>
+
+       <label for="color">Color:</label>
+       <input type="text" id="color" name="color" required>
+
+       <button type="submit">Add Car</button>
+   </form>
+</body>
+</html>
