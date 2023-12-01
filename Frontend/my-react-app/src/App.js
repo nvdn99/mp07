@@ -2,40 +2,59 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const CarFormInput = ({ type, name, value, onChange, placeholder }) => (
+  <input
+    type={type}
+    name={name}
+    value={value}
+    onChange={(e) => onChange(e.target.value)}
+    placeholder={placeholder}
+  />
+);
+
 const CarForm = ({ onSubmit }) => {
-  const [model, setModel] = useState('');
-  const [year, setYear] = useState('');
-  const [color, setColor] = useState('');
+  const initialState = {
+    model: '',
+    year: '',
+    color: '',
+  };
+
+  const [formData, setFormData] = useState(initialState);
+
+  const handleInputChange = (name, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleAddCar = () => {
-    onSubmit({ model, year, color });
-    setModel('');
-    setYear('');
-    setColor('');
+    onSubmit(formData);
+    setFormData(initialState);
   };
 
   return (
     <div className="app-section">
       <h2>Add a Car</h2>
-      <input
+      <CarFormInput
         type="text"
         name="model"
-        value={model}
-        onChange={(e) => setModel(e.target.value)}
+        value={formData.model}
+        onChange={(value) => handleInputChange('model', value)}
         placeholder="Enter car model"
       />
-      <input
+      <CarFormInput
         type="number"
         name="year"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
+        value={formData.year}
+        onChange={(value) => handleInputChange('year', value)}
         placeholder="Enter car year"
       />
-      <input
+      <CarFormInput
         type="text"
         name="color"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
+        value={formData.color}
+        onChange={(value) => handleInputChange('color', value)}
         placeholder="Enter car color"
       />
       <button className="app-button" onClick={handleAddCar}>
@@ -100,3 +119,4 @@ function App() {
 }
 
 export default App;
+
