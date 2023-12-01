@@ -4,6 +4,8 @@ Welcome to the Car Management System, a full-stack web application for managing 
 
 The Car Management System allows users to perform various operations related to cars, such as adding new cars and displaying a list of existing cars. The system is built using modern web technologies, including Node.js, Express, MongoDB, and React.
 
+#Code Climate Grade of B
+
 # Features
 
 Add a Car: Users can add information about a new car, including the model, year, and color.
