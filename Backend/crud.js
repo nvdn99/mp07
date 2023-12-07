@@ -1,4 +1,3 @@
-
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { Engine } from './schemas.js';
@@ -14,6 +13,30 @@ const validateInput = (req, res, next) => {
     next();
 };
 
+// Reusable function for handling engine creation
+const createEngine = async (req, res) => {
+    try {
+        const newEngine = new Engine(req.body);
+        await newEngine.save();
+        return res.json({ message: 'Engine added successfully', engine: newEngine });
+    } catch (error) {
+        console.error('Error adding engine:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Reusable function for handling engine deletion
+const deleteEngineById = async (req, res) => {
+    try {
+        const engineId = req.params.id;
+        const deletedEngine = await Engine.findByIdAndDelete(engineId);
+        return res.json({ message: 'Engine deleted successfully', engine: deletedEngine });
+    } catch (error) {
+        console.error('Error deleting engine:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 // Create
 crudRouter.post('/engines',
     [
@@ -22,16 +45,7 @@ crudRouter.post('/engines',
         body('fuelType').notEmpty(),
     ],
     validateInput,
-    async (req, res) => {
-        try {
-            const newEngine = new Engine(req.body);
-            await newEngine.save();
-            res.json({ message: 'Engine added successfully', engine: newEngine });
-        } catch (error) {
-            console.error('Error adding engine:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
+    createEngine
 );
 
 // Read
@@ -46,20 +60,37 @@ crudRouter.get('/engines', async (req, res) => {
 });
 
 // Update (Modify as needed)
-crudRouter.put('/engines/:id', async (req, res) => {
-    // Update logic
-});
+crudRouter.put('/engines/:id',
+    [
+        body('type').optional().notEmpty(),
+        body('horsepower').optional().isNumeric(),
+        body('fuelType').optional().notEmpty(),
+    ],
+    validateInput,
+    async (req, res) => {
+        try {
+            const engineId = req.params.id;
+            const updatedEngine = await Engine.findByIdAndUpdate(
+                engineId,
+                req.body,
+                { new: true, runValidators: true }
+            );
+
+            if (!updatedEngine) {
+                return res.status(404).json({ error: 'Engine not found' });
+            }
+
+            res.json({ message: 'Engine updated successfully', engine: updatedEngine });
+        } catch (error) {
+            console.error('Error updating engine:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
+);
 
 // Delete
-crudRouter.delete('/engines/:id', async (req, res) => {
-    try {
-        const engineId = req.params.id;
-        const deletedEngine = await Engine.findByIdAndDelete(engineId);
-        res.json({ message: 'Engine deleted successfully', engine: deletedEngine });
-    } catch (error) {
-        console.error('Error deleting engine:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+crudRouter.delete('/engines/:id', deleteEngineById);
 
 export default crudRouter;
+
+

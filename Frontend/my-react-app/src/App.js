@@ -1,43 +1,27 @@
-
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const CarForm = ({ onSubmit }) => {
-  const [model, setModel] = useState('');
-  const [year, setYear] = useState('');
-  const [color, setColor] = useState('');
+  const [car, setCar] = useState({ model: '', year: '', color: '' });
 
   const handleAddCar = () => {
-    onSubmit({ model, year, color });
-    setModel('');
-    setYear('');
-    setColor('');
+    onSubmit(car);
+    setCar({ model: '', year: '', color: '' });
   };
 
   return (
     <div className="app-section">
       <h2>Add a Car</h2>
-      <input
-        type="text"
-        name="model"
-        value={model}
-        onChange={(e) => setModel(e.target.value)}
-        placeholder="Enter car model"
-      />
-      <input
-        type="number"
-        name="year"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-        placeholder="Enter car year"
-      />
-      <input
-        type="text"
-        name="color"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
-        placeholder="Enter car color"
-      />
+      {['model', 'year', 'color'].map((field) => (
+        <input
+          key={field}
+          type={field === 'year' ? 'number' : 'text'}
+          name={field}
+          value={car[field]}
+          onChange={(e) => setCar({ ...car, [field]: e.target.value })}
+          placeholder={`Enter car ${field}`}
+        />
+      ))}
       <button className="app-button" onClick={handleAddCar}>
         Add Car
       </button>
@@ -100,3 +84,4 @@ function App() {
 }
 
 export default App;
+
