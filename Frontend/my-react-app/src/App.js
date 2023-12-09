@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import LoginForm from './login/LoginForm';
-import RegistrationForm from './login/RegisterForm';
 import CrudApp from './crudApp.js';
 
 const CarForm = ({ onSubmit }) => {
@@ -83,8 +81,7 @@ function App() {
       <CarForm onSubmit={handleAddCar} />
       <CarList cars={cars} />
       <CrudApp/>
-      <LoginForm/>
-      <RegistrationForm/>
+
 
 
     </div>

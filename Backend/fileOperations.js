@@ -3,7 +3,6 @@ import express from 'express';
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import crudRouter from './crud.js';
 
 
 
