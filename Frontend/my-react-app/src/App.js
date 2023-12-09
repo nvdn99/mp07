@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import LoginForm from './login/LoginForm';
+import RegistrationForm from './login/RegisterForm';
+import CrudApp from './crudApp.js';
 
 const CarForm = ({ onSubmit }) => {
   const [car, setCar] = useState({ model: '', year: '', color: '' });
@@ -79,6 +82,11 @@ function App() {
       <h1 className="app-title">Welcome to the Car Management Page</h1>
       <CarForm onSubmit={handleAddCar} />
       <CarList cars={cars} />
+      <CrudApp/>
+      <LoginForm/>
+      <RegistrationForm/>
+
+
     </div>
   );
 }
