@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import LoginForm from './login/LoginForm';
+import RegistrationForm from './login/RegisterForm';
 import './App.css';
 import CrudApp from './crudApp.js';
 
@@ -77,6 +79,8 @@ function App() {
 
   return (
     <div className="app-container">
+      <LoginForm/>
+      <RegistrationForm/>
       <h1 className="app-title">Welcome to the Car Management Page</h1>
       <CarForm onSubmit={handleAddCar} />
       <CarList cars={cars} />

@@ -1,26 +1,42 @@
-
+// schemas.js
 import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
+import bcrypt from 'bcrypt';
 
-const engineSchema = new mongoose.Schema({
-    type: String,
-    horsepower: Number,
-    fuelType: String,
+mongoose.connect('mongodb+srv://nvdn99:Skatingpros55@cluster0.mezdyl5.mongodb.net/', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).catch((err) => { 
+    console.error('Cannot connect to monogoDB', err);
 });
 
-const carFactSchema = new mongoose.Schema({
-    weight: Number,
-    acceleration: Number,
-    topSpeed: Number,
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
 });
 
-const tireSchema = new mongoose.Schema({
-    brand: String,
-    size: String,
-    type: String,
+userSchema.plugin(passportLocalMongoose);
+
+userSchema.pre('save', async function (next) {
+    const user = this;
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 10);
+    }
+    next();
 });
 
-const Engine = mongoose.model('Engine', engineSchema);
-const CarFact = mongoose.model('CarFact', carFactSchema);
-const Tire = mongoose.model('Tire', tireSchema);
+// Add the comparePassword method to your User schema
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
 
-export { Engine, CarFact, Tire };
+const User = mongoose.model('User', userSchema);
+
+export default User;
