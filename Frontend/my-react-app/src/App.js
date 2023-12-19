@@ -47,6 +47,8 @@ const CarList = ({ cars }) => (
 
 function App() {
   const [cars, setCars] = useState([]);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [showCrudPage, setShowCrudPage] = useState(false);
 
   useEffect(() => {
     async function fetchCars() {
@@ -77,17 +79,46 @@ function App() {
     }
   };
 
+  const handleAuthentication = () => {
+    setAuthenticated(true);
+  };
+
+  const handleNavigateToCrudPage = () => {
+    setShowCrudPage(true);
+  };
+
+  const handleNavigateBack = () => {
+    setShowCrudPage(false);
+  };
+
   return (
     <div className="app-container">
-      <LoginForm/>
-      <RegistrationForm/>
-      <h1 className="app-title">Welcome to the Car Management Page</h1>
-      <CarForm onSubmit={handleAddCar} />
-      <CarList cars={cars} />
-      <CrudApp/>
-
-
-
+      {!authenticated ? (
+        <>
+          <LoginForm onLogin={handleAuthentication} />
+          <RegistrationForm onRegister={handleAuthentication} />
+        </>
+      ) : (
+        <>
+          <h1 className="app-title">Welcome to the Car Management Page</h1>
+          {!showCrudPage ? (
+            <>
+              <button className="app-button" onClick={handleNavigateToCrudPage}>
+                Go to CRUD Functions
+              </button>
+              <CarForm onSubmit={handleAddCar} />
+              <CarList cars={cars} />
+            </>
+          ) : (
+            <>
+              <button className="app-button" onClick={handleNavigateBack}>
+                Go Back
+              </button>
+              <CrudApp />
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }

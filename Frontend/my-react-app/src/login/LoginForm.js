@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,8 +14,14 @@ const LoginForm = () => {
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-      console.log(data); // Handle the response accordingly
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data); // Handle the response accordingly
+        onLogin(); // Invoke the onLogin function passed as a prop
+      } else {
+        const errorData = await response.json();
+        console.error('Error during login:', errorData.message);
+      }
     } catch (error) {
       console.error('Error during login:', error);
     }
@@ -36,3 +42,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

@@ -20,10 +20,18 @@ export function useTextFileManagement() {
       const newFile = {
         name: newFileName + '.txt',
         content: '',
+        createdBy: getCurrentUserId(), // Assuming you have a function to get the current user's ID
       };
       setFiles((prevFiles) => [...prevFiles, newFile]);
       setNewFileName('');
     }
+  };
+
+  const getCurrentUserId = () => {
+    // Implement a function to get the current user's ID, for example, from your authentication context
+    // This function should return the ID of the currently logged-in user
+    // Replace the following line with the actual implementation
+    return 'user123';
   };
 
   const readAndSetFileContent = (file) => {

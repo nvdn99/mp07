@@ -5,53 +5,73 @@
   margin: 0 auto;
   padding: 20px;
   background-color: #e6ccff; /* Light Purple */
- }
- 
- .app-title {
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.app-title {
   color: #cc66ff; /* Purple */
- }
- 
- .app-section {
+  font-size: 24px;
   margin-bottom: 20px;
- }
- 
- .app-button {
+}
+
+.app-section {
+  margin-bottom: 20px;
+  background-color: #ffd9e6; /* Pale Pastel Pink */
+  padding: 20px;
+  border-radius: 8px; /* Add rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a slight box shadow */
+}
+
+.app-button {
   background-color: #ff3399; /* Pink */
   color: #ffffff; /* White */
-  padding: 8px 16px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
- }
- 
- .app-file-list {
+  border-radius: 4px; /* Add rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition on hover */
+}
+
+.app-button:hover {
+  background-color: #cc0066; /* Darker Pink on hover */
+}
+
+.app-file-list {
   list-style-type: none;
   padding: 0;
- }
- 
- .app-file-list li {
-  margin-bottom: 8px;
- }
- 
- .app-delete-button {
+}
+
+.app-file-list li {
+  margin-bottom: 10px;
+}
+
+.app-delete-button {
   background-color: #ff6666; /* Light Red */
   color: #ffffff; /* White */
-  padding: 4px 8px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
- }
- 
- .app-json-section {
+  border-radius: 4px; /* Add rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition on hover */
+}
+
+.app-delete-button:hover {
+  background-color: #cc0000; /* Darker Red on hover */
+}
+
+.app-json-section {
   background-color: #ffccff; /* Light Pink */
   padding: 20px;
   margin-top: 20px;
- }
- 
- .app-file-content {
+  border-radius: 8px; /* Add rounded corners */
+}
+
+.app-file-content {
   white-space: pre-wrap;
- }
- 
- .app-file-not-found {
+}
+
+.app-file-not-found {
   color: #ff6666; /* Light Red */
- }
- 
- /* Add any additional styles as needed */
+  font-weight: bold;
+}

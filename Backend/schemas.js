@@ -10,6 +10,16 @@ mongoose.connect('mongodb+srv://nvdn99:Skatingpros55@cluster0.mezdyl5.mongodb.ne
     console.error('Cannot connect to monogoDB', err);
 });
 
+const carSchema = new mongoose.Schema({
+    model: String,
+    year: Number,
+    color: String,
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+});
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -20,6 +30,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -38,5 +52,6 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 const User = mongoose.model('User', userSchema);
+const Car = mongoose.model('Car', carSchema);
 
-export default User;
+export { User, Car };

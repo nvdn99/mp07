@@ -1,3 +1,4 @@
+// filesOperation.js
 import express from 'express';
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
@@ -8,7 +9,7 @@ import LocalStrategy from 'passport-local';
 import expressSession from 'express-session';
 import passportLocalMongoose from 'passport-local-mongoose';
 import cookieParser from 'cookie-parser';
-import User from './schemas.js'; // Correct path to schemas.js
+import { User, Car } from './schemas.js'; // Correct path to schemas.js
 
 const app = express();
 const port = 3001;
@@ -101,18 +102,6 @@ passport.deserializeUser(async (id, done) => {
    }
 });
 
-
-
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
-    });
-});
-
 // Authentication Routes
 const authRouter = express.Router();
 app.use('/auth', authRouter);
@@ -188,19 +177,20 @@ app.get('/', (req, res) => {
 });
 
 const v1Router = express.Router();
-v1Router.get('/add', (req, res) => {
+v1Router.get('/add', isAuthenticated, (req, res) => {
     res.render('addCar.ejs');
 });
 
 // Handle POST request to add a new car
-v1Router.post('/api/cars', async (req, res) => {
+v1Router.post('/api/cars', isAuthenticated, async (req, res) => {
     const { model, year, color } = req.body;
 
     try {
         const newCar = {
             model,
             year,
-            color
+            color,
+            createdBy: req.user._id, // Set the createdBy field to the user's ID
         };
 
         const collection = db.collection('cars');
@@ -215,7 +205,7 @@ v1Router.post('/api/cars', async (req, res) => {
 
 v1Router.get('/api/cars', async (req, res) => {
     const collection = db.collection('cars');
-    const cars = await collection.find({}).toArray();
+    const cars = await collection.find({ createdBy: req.user._id }).toArray(); // Only fetch cars created by the user
     res.json(cars);
 });
 
